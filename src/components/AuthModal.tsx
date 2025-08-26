@@ -31,8 +31,8 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
       onClose()
       setEmail('')
       setPassword('')
-    } catch (error: any) {
-      setError(error.message || '操作失败，请重试')
+    } catch (error: unknown) {
+      setError(error instanceof Error ? error.message : '操作失败，请重试')
     } finally {
       setLoading(false)
     }

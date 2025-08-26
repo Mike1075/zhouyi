@@ -7,7 +7,7 @@ interface DivinationAnimationProps {
   duration?: number
 }
 
-export default function DivinationAnimation({ isVisible, duration = 4000 }: DivinationAnimationProps) {
+export default function DivinationAnimation({ isVisible }: DivinationAnimationProps) {
   const [phase, setPhase] = useState(0)
 
   useEffect(() => {

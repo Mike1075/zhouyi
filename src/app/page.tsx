@@ -10,7 +10,12 @@ export default function Home() {
   const [result, setResult] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
   const [question, setQuestion] = useState('')
-  const [hexagramInfo, setHexagramInfo] = useState<any>(null)
+  const [hexagramInfo, setHexagramInfo] = useState<{
+    benGua: string
+    bianYao: number[]
+    zhiGua: string
+    yaoResults: number[]
+  } | null>(null)
 
   const handleSelectRecord = (record: DivinationRecord) => {
     setQuestion(record.question)

@@ -10,7 +10,12 @@ interface InputSectionProps {
   onResult: (result: string) => void
   onLoading: (loading: boolean) => void
   onQuestionChange: (question: string) => void
-  onHexagramInfo: (info: any) => void
+  onHexagramInfo: (info: {
+    benGua: string
+    bianYao: number[]
+    zhiGua: string
+    yaoResults: number[]
+  }) => void
   initialQuestion?: string
 }
 
@@ -100,7 +105,7 @@ export default function InputSection({
                 result += data.content
                 onResult(result)
               }
-            } catch (e) {
+            } catch {
               // 忽略解析错误
             }
           }

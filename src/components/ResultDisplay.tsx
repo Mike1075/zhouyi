@@ -6,7 +6,12 @@ interface ResultDisplayProps {
   result: string
   isLoading: boolean
   question: string
-  hexagramInfo: any
+  hexagramInfo: {
+    benGua: string
+    bianYao: number[]
+    zhiGua: string
+    yaoResults: number[]
+  } | null
 }
 
 export default function ResultDisplay({ 

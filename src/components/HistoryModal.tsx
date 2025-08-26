@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useAuth } from './AuthProvider'
 import { getUserDivinationHistory, deleteDivinationRecord } from '@/lib/database'
 import { DivinationRecord } from '@/lib/database.types'
@@ -17,13 +17,7 @@ export default function HistoryModal({ isOpen, onClose, onSelectRecord }: Histor
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  useEffect(() => {
-    if (isOpen && user) {
-      loadHistory()
-    }
-  }, [isOpen, user])
-
-  const loadHistory = async () => {
+  const loadHistory = useCallback(async () => {
     if (!user) return
 
     setLoading(true)
@@ -32,13 +26,21 @@ export default function HistoryModal({ isOpen, onClose, onSelectRecord }: Histor
     try {
       const data = await getUserDivinationHistory(user.id)
       setRecords(data)
-    } catch (error: any) {
+    } catch (error: unknown) {
       setError('加载历史记录失败')
       console.error('Error loading history:', error)
     } finally {
       setLoading(false)
     }
-  }
+  }, [user])
+
+  useEffect(() => {
+    if (isOpen && user) {
+      loadHistory()
+    }
+  }, [isOpen, user, loadHistory])
+
+
 
   const handleDelete = async (id: string) => {
     if (!confirm('确定要删除这条记录吗？')) return
@@ -46,7 +48,7 @@ export default function HistoryModal({ isOpen, onClose, onSelectRecord }: Histor
     try {
       await deleteDivinationRecord(id)
       setRecords(records.filter(record => record.id !== id))
-    } catch (error: any) {
+    } catch (error: unknown) {
       alert('删除失败，请重试')
       console.error('Error deleting record:', error)
     }

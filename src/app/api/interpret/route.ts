@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
                     controller.close()
                     break
                   }
-                } catch (e) {
+                } catch {
                   // 忽略解析错误，继续处理下一行
                   console.warn('Failed to parse Dify response line:', line)
                 }
